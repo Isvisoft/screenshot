@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:screenshot/screenshot.dart';
 
 void main() => runApp(MyApp());
 
@@ -96,8 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'You have pushed the button this many times:' +
-                          _counter.toString(),
+                      'You have pushed the button this many times:' + _counter.toString(),
                     ),
                     FlutterLogo(),
                   ],
@@ -112,15 +110,12 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           _incrementCounter();
           _imageFile = null;
-          screenshotController
-              .capture(delay: Duration(milliseconds: 10))
-              .then((File image) async {
+          screenshotController.capture(delay: Duration(milliseconds: 10)).then((File image) async {
             //print("Capture Done");
             setState(() {
               _imageFile = image;
             });
-            final result =
-                await ImageGallerySaver.save(image.readAsBytesSync());
+            final result = await ImageGallerySaver.saveImage(image.readAsBytesSync());
             print("File Saved to Gallery");
           }).catchError((onError) {
             print(onError);
@@ -133,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _saved(File image) async {
-    final result = await ImageGallerySaver.save(image.readAsBytesSync());
+    final result = await ImageGallerySaver.saveImage(image.readAsBytesSync());
     print("File Saved to Gallery");
   }
 }
